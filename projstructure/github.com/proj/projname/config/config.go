@@ -10,6 +10,8 @@ import (
 	"sync"
 )
 
+var mutex = &sync.Mutex{}
+
 // AppConfig represents the structure of the configuration
 type AppConfig struct {
 	App      *AppConfigDetails      `yaml:"app"`
@@ -45,7 +47,7 @@ var (
 )
 
 // LoadConfig loads the configuration from the config.yml file
-func LoadConfig() *AppConfig {
+func LoadConfigHelper() *AppConfig {
 	configOnce.Do(func() {
 		ex, err := os.Executable()
 		if err != nil {
@@ -69,5 +71,20 @@ func LoadConfig() *AppConfig {
 		}
 	})
 
+	return config
+}
+
+func GetSingleConfigInstance() *AppConfig {
+	if config == nil {
+		mutex.Lock()
+		defer mutex.Unlock()
+		if config == nil {
+			return LoadConfigHelper()
+		} else {
+			fmt.Println("Single Instance already created-1, returning that one")
+		}
+	} else {
+		fmt.Println("Single Instance already created-2, returning the same")
+	}
 	return config
 }

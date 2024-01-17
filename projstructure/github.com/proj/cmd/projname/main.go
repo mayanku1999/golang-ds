@@ -7,9 +7,9 @@ import (
 )
 
 func main() {
-	conf := config.LoadConfig()
+	conf := config.GetSingleConfigInstance()
 	fmt.Println(conf)
-	players := projname.NewPlayersSvc()
+	players := projname.NewPlayersSvc(conf)
 	players.Create()
 	players.Create()
 	fmt.Println((players.Players()))

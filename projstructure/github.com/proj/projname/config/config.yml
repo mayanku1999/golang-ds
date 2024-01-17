@@ -1,0 +1,26 @@
+# config.yml
+app:
+  name: "MyApp"
+  version: "1.0"
+  debug: true
+  owner:
+    - "abc"
+    - "def"
+  mapowner:
+    - "ABC":
+        value1:
+          - "mapowner1"
+          - "mapowner2"
+    - "DEF":
+        value1:
+          - "mapowner3"
+        value2: true
+
+
+
+database:
+  host: "localhost"
+  port: 3306
+  username: "root"
+  password: "password"
+  dbname: "mydatabase"

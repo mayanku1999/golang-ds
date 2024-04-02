@@ -1,0 +1,9 @@
+# config.yml
+App:
+  Name: "MyApp"
+
+FeatureConstraint:
+  "FEATURE_1":
+    UserGroupConstraint:
+      "L1": true
+      "L2": true

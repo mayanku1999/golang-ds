@@ -34,7 +34,6 @@ const (
 	UserRole_L3          = 3
 )
 
-// Enum value maps for AaEquityAccountFieldMask.
 var (
 	UserRole_name = map[int32]string{
 		0: "USER_ROLE_UNSPECIFIED",

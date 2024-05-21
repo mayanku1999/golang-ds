@@ -6,6 +6,7 @@ import (
 	"github.com/phonepeproj/proj/dao"
 	"github.com/phonepeproj/proj/dao/model"
 	"github.com/phonepeproj/proj/enums"
+	"github.com/phonepeproj/proj/serviceimpl/docversion"
 	maps "golang.org/x/exp/maps"
 	"time"
 )
@@ -48,7 +49,7 @@ func (d *DocDaoImpl) Create(authorId, name, content string, publishMode enums.Pu
 		SetCreatedBy(authorId).
 		SetPublishMode(publishMode).
 		SetCurrentContent(content)
-	newDoc.VersionsControl = &model.VersionsControl{Versions: []*model.Version{{Content: content, CreatedAt: time.Now()}}}
+	newDoc.VersionsControl = &docversion.VersionsControl{Versions: []*docversion.Version{{Content: content, CreatedAt: time.Now()}}}
 	if d.Docs == nil {
 		d.Docs = map[string]*model.Document{
 			newDoc.GetId(): newDoc,
@@ -82,7 +83,7 @@ func (d *DocDaoImpl) Update(authorID, docId string, newContent string) (*model.D
 	doc.Lock.Lock()
 	defer doc.Lock.Unlock()
 
-	updatedVersions := append(doc.GetVersionControls().Versions, &model.Version{Content: newContent, CreatedAt: time.Now()})
+	updatedVersions := append(doc.GetVersionControls().Versions, &docversion.Version{Content: newContent, CreatedAt: time.Now()})
 	updatedDoc := doc.SetCurrentContent(newContent).SetVersionControls(updatedVersions)
 	return updatedDoc, nil
 }
@@ -106,7 +107,7 @@ func (d *DocDaoImpl) Delete(authorID, docId string) error {
 	return nil
 }
 
-func (d *DocDaoImpl) GetLatestVersion(docId string) (*model.Version, error) {
+func (d *DocDaoImpl) GetLatestVersion(docId string) (*docversion.Version, error) {
 	doc, ok := d.Docs[docId]
 	if !ok {
 		return nil, fmt.Errorf("invalid doc id/doc does not exist")

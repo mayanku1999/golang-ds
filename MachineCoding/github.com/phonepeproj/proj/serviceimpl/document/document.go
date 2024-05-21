@@ -9,6 +9,7 @@ import (
 	"github.com/phonepeproj/proj/dao/daoimpl"
 	"github.com/phonepeproj/proj/dao/model"
 	"github.com/phonepeproj/proj/enums"
+	"github.com/phonepeproj/proj/serviceimpl/docversion"
 	"github.com/phonepeproj/proj/serviceimpl/notification"
 	"github.com/phonepeproj/proj/serviceimpl/user"
 )
@@ -75,10 +76,10 @@ func (d *DocSvcImpl) Update(authorID, docID string, newContent string) (*model.D
 	if err != nil {
 		return nil, err
 	}
-	_, err = d.UserSvcClient.IsUserSessionValid(authorID)
-	if err != nil {
-		return nil, err
-	}
+	//_, err = d.UserSvcClient.IsUserSessionValid(authorID)
+	//if err != nil {
+	//	return nil, err
+	//}
 
 	updDoc, err := d.DocDao.Update(authorID, docID, newContent)
 	if err != nil {
@@ -106,7 +107,7 @@ func (d *DocSvcImpl) Delete(authorId, docId string) error {
 	return nil
 }
 
-func (d *DocSvcImpl) GetLatestVersion(authorId, docId string) (*model.Version, error) {
+func (d *DocSvcImpl) GetLatestVersion(authorId, docId string) (*docversion.Version, error) {
 	if docId == "" || authorId == "" {
 		return nil, errors.New("docId/authorId cannot be empty")
 	}

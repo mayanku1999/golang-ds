@@ -2,6 +2,7 @@ package model
 
 import (
 	"github.com/phonepeproj/proj/enums"
+	"github.com/phonepeproj/proj/serviceimpl/docversion"
 	"sync"
 	"time"
 )
@@ -16,7 +17,8 @@ type Document struct {
 	PublishMode enums.PublishedMode
 	*Privileges
 	CurrentContent string
-	*VersionsControl
+	//*VersionsControl
+	*docversion.VersionsControl
 	Lock *sync.Mutex
 }
 
@@ -61,7 +63,7 @@ func (d *Document) GetCurrentContent() string {
 	return d.CurrentContent
 }
 
-func (d *Document) GetVersionControls() *VersionsControl {
+func (d *Document) GetVersionControls() *docversion.VersionsControl {
 	return d.VersionsControl
 }
 
@@ -114,7 +116,7 @@ func (d *Document) SetCurrentContent(currentContent string) *Document {
 	return d
 }
 
-func (d *Document) SetVersionControls(versionControls []*Version) *Document {
+func (d *Document) SetVersionControls(versionControls []*docversion.Version) *Document {
 	d.Versions = versionControls
 	return d
 }

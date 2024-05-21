@@ -3,6 +3,7 @@ package dao
 import (
 	"github.com/phonepeproj/proj/dao/model"
 	"github.com/phonepeproj/proj/enums"
+	"github.com/phonepeproj/proj/serviceimpl/docversion"
 )
 
 type IUserDao interface {
@@ -16,7 +17,7 @@ type IDocDao interface {
 	GetByModeAndUser(userId string, mode enums.PublishedMode) ([]*model.Document, error)
 	Create(authorId, name, content string, publishMode enums.PublishedMode) (*model.Document, error)
 	Update(authorID, docId string, newContent string) (*model.Document, error)
+	GetLatestVersion(docId string) (*docversion.Version, error)
 	Delete(authorID, docId string) error
-	GetLatestVersion(docId string) (*model.Version, error)
 	//Update()
 }
